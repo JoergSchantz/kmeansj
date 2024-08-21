@@ -5,7 +5,7 @@
 #'
 #' @return
 #' @export
-silhouette <- function( data, fit ) {
+silhouette <- function( fit, data ) {
   # number data points
   n <- nrow( data )
 

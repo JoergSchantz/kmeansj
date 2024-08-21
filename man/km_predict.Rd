@@ -4,12 +4,12 @@
 \alias{km_predict}
 \title{Cluster prediction on test data}
 \usage{
-km_predict(data, fit)
+km_predict(fit, data)
 }
 \arguments{
-\item{data}{unseen test data}
-
 \item{fit}{fitted model}
+
+\item{data}{unseen test data}
 }
 \description{
 Cluster prediction on test data

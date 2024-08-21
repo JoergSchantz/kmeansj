@@ -196,7 +196,7 @@ kmeans_mcq <- function( data, k, max_iter = 20, tol = 1e-4 ) {
 #' @export
 #'
 #' @examples
-kmeans_hobbit <- function( data, k, max_iter = 20, tol = 1e-4, method = "hw" ) {
+kmeansj <- function( data, k, max_iter = 20, tol = 1e-4, method = "hw" ) {
   methods <- list(
     lloyd = kmeans_lloyd,
     mcq = kmeans_mcq,

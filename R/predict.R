@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @examples
-km_predict <- function( data, fit ) {
+km_predict <- function( fit, data ) {
   pred <- assign_clusters( data, fit$centroids )
 
   # more to do

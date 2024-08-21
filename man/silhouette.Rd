@@ -4,7 +4,7 @@
 \alias{silhouette}
 \title{Silhouette Score}
 \usage{
-silhouette(data, fit)
+silhouette(fit, data)
 }
 \arguments{
 \item{fit}{}

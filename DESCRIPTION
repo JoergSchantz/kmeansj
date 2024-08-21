@@ -1,11 +1,16 @@
 Package: kmeansj
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Exercise for implementing the k-means algorithm
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
+Author: Joerg Schantz
+Maintainer: Joerg Schantz <joerg.schantz@muenchen-mail.de>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 7.3.1
