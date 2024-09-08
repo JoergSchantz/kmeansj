@@ -57,7 +57,7 @@ iris %>%
 ```
 **Output**
 
-![](ExampleOutput.png)
+![Dividing the iris data set into three clusters.](ExampleOutput.png)
 
 ## Usage
 
