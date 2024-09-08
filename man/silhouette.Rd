@@ -7,7 +7,12 @@
 silhouette(fit, data)
 }
 \arguments{
-\item{fit}{}
+\item{fit}{return object from 'kmeansj()'}
+
+\item{data}{data.frame}
+}
+\value{
+silhouette score of 'fit'
 }
 \description{
 Silhouette Score
