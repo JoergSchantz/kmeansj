@@ -1,9 +1,9 @@
 #' Silhouette Score
 #'
-#' @param data
-#' @param fit
+#' @param data data.frame
+#' @param fit return object from 'kmeansj()'
 #'
-#' @return
+#' @return silhouette score of 'fit'
 #' @export
 silhouette <- function( fit, data ) {
   # number data points
@@ -14,15 +14,16 @@ silhouette <- function( fit, data ) {
 
   # distances of each point to another
   all_distances <- as.matrix( dist( data ) )
-  all_distances <- all_distances[]
 
   # calculate individual silhouette scores
   sil <- sapply( 1:n,
                  function( i ) {
                    current_cluster <- fit$clusters[i]
-
+                   all_dist_i <- all_distances[-i,]
+                   clusters_i <- fit$clusters[-i]
                    # calculate average within cluster distance of current observation
-                   avrg_within_dist <- mean( all_distances[fit$clusters == current_cluster, i] )
+
+                   avrg_within_dist <- mean( all_dist_i[clusters_i == current_cluster, i] )
 
                    # calculate average "within cluster distance" of obsv. in every other cluster
                    avrg_neighbour_dist <- sapply( c( 1:k )[-current_cluster],

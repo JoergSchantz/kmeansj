@@ -39,22 +39,19 @@ devtools::install_github("JoergSchantz/kmeansj")
 - one base function `kmeansj()` which is the centre of this package
 - individual functions for Lloyd's, MacQueen's and Hartigan-Wongs' iteration of the k-means clustering algorithm
 - silhouette cluster validation
-- simple prediction
 
 ```
 library( tidyverse )
 library( kmeansj )
 
-data( "iris" )
-
 iris %>% 
   mutate( Species, 
           Cluster = as.factor(
-            kmeansj( iris %>% select( Sepal.Length, Petal.Length ) , k = 3 )$clusters 
+            kmeansj( iris %>% select( Sepal.Length, Petal.Length ), k = 3 )$clusters 
             ) 
           ) %>%
   select( Sepal.Length, Petal.Length, Cluster ) %>%
-  ggplot( aes( x = Sepal.Length, y = Petal.Length, color = Cluster) ) +
+  ggplot( aes( x = Sepal.Length, y = Petal.Length, color = Cluster ) ) +
   geom_point() +
   theme_minimal()
 ```
@@ -66,23 +63,15 @@ iris %>%
 
 `kmeansj( data, k, max_iter = 20, tol = 1e-4, method = "hw" )`
 
-`kmeans_lloyd( data, k, max_iter = 20, tol = 1e-4 )`
-
-`kmeans_mcq( data, k, max_iter = 20, tol = 1e-4 )`
-
-`kmeans_hw( data, k, max_iter = 20, tol = 1e-4 )`
-
 `silhouette( data, fit )`
-
-`km_predict( data, fit )`
 
 |**Arguments** | **Description** |
 | :-------- | :------- |
-| data |  your data - expects a data.frame, in case of `km_predict()` a new data.frame |
+| data |  your data - expects a data.frame |
 | k |  number of desired clusters - expects a in integer > 1  |
-| max_iter |  maximum number of iterations the algorithm should go through if it does not converge - expects a integer |
+| max_iter |  maximum number of iterations the algorithm should go through if it does not converge - expects an integer |
 | tol |  tolerance bound for convergance - expects a positive numeric |
-| method |  specifies the desired clustering algorithm. One of the following: `lloyd`, `mcq` or `hw` |
+| method |  specifies the desired clustering algorithm - one of the following: `lloyd`, `mcq` or `hw` |
 | fit | expects a return object from `kmeansj()`, `kmeans_lloyd()`, `kmeans_mcq()` or `kmeans_hw()` |
 
 ## Details & Values
@@ -101,8 +90,6 @@ For `kmeansj()` and all other clustering functions a `list` which contains the f
 
 For `silhouette()` a numeric, the `base::mean()` silhouette score.
 
-For `km_predict()` ... XYZ ...
-
 ## Example
 ```
 iris %>% 
@@ -115,7 +102,6 @@ $clusters
 [1] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
 [51] 1 3 1 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 1 1 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 2 3
 [101] 1 3 1 1 1 1 3 1 1 1 1 1 1 3 3 1 1 1 1 3 1 3 1 3 1 1 3 3 1 1 1 1 1 1 1 1 1 1 3 1 1 1 3 1 1 1 3 1 1 3
-Levels: 1 2 3
 
 $centroids
      Sepal.Length Petal.Length

@@ -53,16 +53,6 @@ update_centroids <- function( data, clusters, k ) {
   t( centroids )
 }
 
-#' Update Centroid only for MacQueen
-#'
-#' @param old_centroid
-#' @param point
-#' @param cluster_size
-#' @noRd
-update_centroid <- function( old_centroid, point, cluster_size ) {
-  old_centroid + ( point - old_centroid ) / cluster_size
-}
-
 #' Sum of Squares
 #'
 #' @param data

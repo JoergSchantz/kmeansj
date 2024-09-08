@@ -5,14 +5,9 @@
 #' @param max_iter
 #' @param tol
 #'
-#' @return
-#' @export
-#'
-#' @examples
+#' @noRd
 kmeans_lloyd <- function( data, k, max_iter = 20, tol = 1e-4 ) {
   # choose k random data points as starting centroids
-  # ini_id <- sample( 1:nrow( data ), k )
-  # centroids <- data[ini_id, ]
   centroids <- kmpp( data, k )
 
   for ( iter in 1:max_iter ) {
@@ -30,6 +25,7 @@ kmeans_lloyd <- function( data, k, max_iter = 20, tol = 1e-4 ) {
     centroids <- new_centroids
   }
 
+  rownames( centroids ) <- c( 1, 2, 3 )
   totss <- ss( data )
   wss <- wcss( data, clusters )
   totwss <- sum( wcss( data, clusters ) )
@@ -56,10 +52,7 @@ kmeans_lloyd <- function( data, k, max_iter = 20, tol = 1e-4 ) {
 #' @param max_iter
 #' @param tol
 #'
-#' @return
-#' @export
-#'
-#' @examples
+#' @noRd
 kmeans_hw <- function( data, k, max_iter = 20, tol = 1e-4 ) {
   # choose k random data points as starting centroids
   # ini_id <- sample( 1:nrow( data ), k )
@@ -104,6 +97,7 @@ kmeans_hw <- function( data, k, max_iter = 20, tol = 1e-4 ) {
     }
   }
 
+  rownames( centroids ) <- c( 1, 2, 3 )
   totss <- ss( data )
   wss <- wcss( data, clusters )
   totwss <- sum( wcss( data, clusters ) )
@@ -130,28 +124,18 @@ kmeans_hw <- function( data, k, max_iter = 20, tol = 1e-4 ) {
 #' @param max_iter
 #' @param tol
 #'
-#' @return
-#' @export
-#'
-#' @examples
+#' @noRd
 kmeans_mcq <- function( data, k, max_iter = 20, tol = 1e-4 ) {
+  n <- nrow( data )
   # choose k random data points as starting centroids
-  #
-  # ini_id <- sample( 1:nrow( data ), k )
-  # centroids <- data[ini_id, ]
-  centroids <- kmpp( data, k )
+  centroids <- kmpp( data , k )
+  clusters <- rep( 0, n )
 
-  clusters <- rep( 0, nrow( data ) )
-  cluster_sizes <- rep( 0, k )
-
-  for ( iter in 1:max_iter )  {
-    for ( i in 1:nrow( data ) ) {
+  for ( iter in 1:max_iter ) {
+    for ( i in 1:n ) {
       cluster <- assign_cluster( data[i, ], centroids )
       clusters[i] <- cluster
-      cluster_sizes[cluster] <- cluster_sizes[cluster] + 1
-      centroids[cluster, ] <- update_centroid( centroids[cluster, ],
-                                               data[i, ],
-                                               cluster_sizes[cluster] )
+      centroids[cluster, ] <- colMeans( data[clusters == cluster, ] )
     }
 
     # compute total within-cluster sum of squares
@@ -165,6 +149,7 @@ kmeans_mcq <- function( data, k, max_iter = 20, tol = 1e-4 ) {
     prev_wcss <- total_wcss
   }
 
+  rownames( centroids ) <- c( 1, 2, 3 )
   totss <- ss( data )
   wss <- wcss( data, clusters )
   totwss <- sum( wcss( data, clusters ) )
@@ -186,16 +171,14 @@ kmeans_mcq <- function( data, k, max_iter = 20, tol = 1e-4 ) {
 
 #' General k-means function with all algo options
 #'
-#' @param data
-#' @param k
-#' @param max_iter
-#' @param tol
-#' @param method
+#' @param data data.frame
+#' @param k integer
+#' @param max_iter integer
+#' @param tol positive numeric
+#' @param method "lloyd", "mcq" or "hw"
 #'
-#' @return
+#' @return list, see vignette for more information
 #' @export
-#'
-#' @examples
 kmeansj <- function( data, k, max_iter = 20, tol = 1e-4, method = "hw" ) {
   methods <- list(
     lloyd = kmeans_lloyd,

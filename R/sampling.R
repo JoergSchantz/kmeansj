@@ -3,11 +3,9 @@
 #' @param data
 #' @param k
 #'
-#' @return
-#' @keywords internal
-#'
-#' @examples
+#' @noRd
 kmpp <- function( data, k ) {
+  if( k <= 1 ) stop( "Error: k < 2 | k must be at least 2")
   n <- nrow( data )
   ini_id <- sample( n, 1 )
   centroids <- data[ini_id, , drop = FALSE]
